@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{home.title}"></title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center" th:text="#{home.head}"></h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Country Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="code : ${codelist}">
+                        <td th:text="${codeStat.count}"></td>
+                        <td><a th:href="@{/view/}+${code}"  th:text="${code}"></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
