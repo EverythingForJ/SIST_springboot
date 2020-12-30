@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+" http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Membership">
+
+	<select id="currentDate" resultType="java.util.Date">
+		SELECT SYSDATE FROM dual
+	</select>
+
+	<parameterMap type="memberVO" id="insertParameterMap">
+		<parameter property="userid" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<parameter property="passwd" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<parameter property="name" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<parameter property="age" javaType="java.lang.Integer"
+			jdbcType="INTEGER" />
+		<parameter property="gender" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<parameter property="city" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+	</parameterMap>
+
+	<insert id="insert" parameterType="memberVO"
+		parameterMap="insertParameterMap" statementType="CALLABLE">
+		{ call
+		sp_member_insert(?,?,?,?,?,?) }
+	</insert>
+
+	<resultMap type="memberVO" id="selectMap">
+		<result property="userid" column="userid" />
+		<result property="passwd" column="passwd" />
+		<result property="name" column="name" />
+		<result property="age" column="age" />
+		<result property="gender" column="gender" />
+		<result property="city" column="city" />
+	</resultMap>
+
+	<parameterMap type="hashmap" id="selectAllParameterMap">
+		<parameter property="results" javaType="ResultSet"
+			jdbcType="CURSOR" mode="OUT" resultMap="selectMap" />
+	</parameterMap>
+
+	<select id="selectAll" parameterMap="selectAllParameterMap"
+		statementType="CALLABLE">
+		{ call sp_member_select_all(?) }
+	</select>
+
+	<parameterMap type="hashmap" id="selectParameterMap">
+		<parameter property="userid" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="result" javaType="ResultSet"
+			jdbcType="CURSOR" mode="OUT" resultMap="selectMap" />
+	</parameterMap>
+
+	<select id="select" parameterMap="selectParameterMap"
+		statementType="CALLABLE">
+		{ call sp_member_select(?,?) }
+	</select>
+
+	<parameterMap type="memberVO" id="parameterUpdateMap">
+		<parameter property="age" javaType="java.lang.Integer" jdbcType="INTEGER" />
+		<parameter property="gender" javaType="java.lang.String" jdbcType="VARCHAR" />
+				<parameter property="city" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+		<parameter property="userid" javaType="java.lang.String"
+			jdbcType="VARCHAR" />
+	</parameterMap>
+	<update id="update" parameterType="memberVO"
+		parameterMap="parameterUpdateMap" statementType="CALLABLE">
+		{ call sp_member_update(?,?,?,?) }
+	</update>
+
+</mapper>

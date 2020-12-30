@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=" https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title th:text="#{message.title}"></title>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+	<div>
+		<a th:href="@{/}"><img th:src="@{images/spring-boot.png}" /></a>
+	</div>
+	<h1 th:text="#{message.list.head}"></h1>
+	<table>
+		<thead>
+			<tr>
+				<th>일련번호</th>
+				<th>아이디</th>
+				<th>이름</th>
+				<th>나이</th>
+				<th>성별</th>
+				<th>거주지</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="member:${members}">
+				<td th:text="${memberStat.count}"></td>
+				<td><a th:href="@{/member/{userid}(userid=${member.userid})}"
+					th:text="*{member.userid}"></a></td>
+				<td th:text="*{member.name}"></td>
+				<td th:text="*{member.age}"></td>
+				<td th:if="*{member.gender eq '1'} ? '남성' : '여성' "></td>
+				<td th:text="*{member.city}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
