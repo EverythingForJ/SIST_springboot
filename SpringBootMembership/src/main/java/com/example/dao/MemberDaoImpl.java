@@ -10,28 +10,31 @@ import com.example.vo.MemberVO;
 
 @Repository("memberDao")
 public class MemberDaoImpl implements MemberDao {
-
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	@Override
 	public void create(MemberVO member) {
-		this.sqlSession.insert("Membership.insert", member);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void readAll(Map map) {
-		this.sqlSession.selectList("Membership.selectAll", map);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void read(Map map) {
-		this.sqlSession.selectOne("Membership.select", map);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void update(MemberVO member) {
-	this.sqlSession.update("Membership.update", member);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

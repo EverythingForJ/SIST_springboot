@@ -10,28 +10,31 @@ import com.example.vo.MemberVO;
 
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
-
 	@Autowired
 	private MemberDao memberDao;
 
 	@Override
 	public void insertMember(MemberVO member) {
-		this.memberDao.create(member);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void selectAllMembers(Map map) {
-		this.memberDao.readAll(map);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void selectMember(Map map) {
-		this.memberDao.read(map);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void updateMember(MemberVO member) {
-		this.memberDao.update(member);
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
