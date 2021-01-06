@@ -20,8 +20,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public void selectBoard(Map map) {
-		// TODO Auto-generated method stub
-		
+		this.sqlSession.selectOne("Board.selectOneSP", map);
 	}
 
 	@Override

@@ -67,7 +67,34 @@ public class BoardController {
 		this.boardService.read(map);
 		List<BoardVO> list = (List<BoardVO>)map.get("result");
 		BoardVO boardVo = list.get(0);
+		
+		String name = boardVo.getName();
+		name = rechange(name);
+		boardVo.setName(name);
+		
+		String title = boardVo.getTitle();
+		title = rechange(title);
+		boardVo.setTitle(title);
+		
+		String contents = boardVo.getContents();
+		contents = rechange(contents);
+		boardVo.setContents(contents);
+		
+		String filename = boardVo.getFilename();
+		if(filename != null) {
+			int lastIndex = filename.lastIndexOf(".");
+			String ext = filename.substring(lastIndex + 1);
+			model.addAttribute("ext", ext);
+		}
+		
 		model.addAttribute("board", boardVo);
 		return "view";     //  /templates/view.html
+	}
+	
+	private String rechange(String oldStr) {
+		String newStr = oldStr.replace("''", "'");   //홑홑따옴표를 홑따옴표로
+		newStr = newStr.replace("&lt;", "<");
+		newStr = newStr.replace("&gt;", ">");
+		return newStr;
 	}
 }

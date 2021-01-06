@@ -53,10 +53,10 @@ public class BoardServiceImpl implements BoardService {
 		newStr = newStr.replace(">", "&gt;");
 		return newStr;
 	}
+	
 	@Override
 	public void read(Map map) {
-		// TODO Auto-generated method stub
-		
+		this.boardDao.selectBoard(map);
 	}
 
 	@Override

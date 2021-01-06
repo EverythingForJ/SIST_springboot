@@ -36,6 +36,14 @@
 		{ call sp_board_select_all(?) }
 	</select>
 
+	<parameterMap type="hashMap" id="selectOneParameterMap">
+		<parameter property="idx" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" 
+		mode="OUT" resultMap="selectMap"/>
+	</parameterMap>
+	<select id="selectOneSP" parameterMap="selectOneParameterMap" statementType="CALLABLE">
+		{ call sp_board_select_one(?, ?) }	
+	</select>
 
 	<parameterMap type="boardVo" id="insertParameterMap">
 		<parameter property="name" javaType="String" jdbcType="VARCHAR" />
@@ -48,12 +56,5 @@
 	<insert id="insertSP" statementType="CALLABLE" parameterMap="insertParameterMap">
 		{ call sp_board_insert(?, ?, ?, ?, ?) }
 	</insert>
-
-
-
-
-
-
-
 
 </mapper>
