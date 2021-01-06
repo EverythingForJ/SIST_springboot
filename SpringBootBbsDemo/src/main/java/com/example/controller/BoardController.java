@@ -1,10 +1,18 @@
 package com.example.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,6 +93,10 @@ public class BoardController {
 			int lastIndex = filename.lastIndexOf(".");
 			String ext = filename.substring(lastIndex + 1);
 			model.addAttribute("ext", ext);
+			
+			lastIndex = filename.lastIndexOf("\\");
+			String realFilename = filename.substring(lastIndex+1);
+			model.addAttribute("realFilename",realFilename);
 		}
 		
 		model.addAttribute("board", boardVo);
@@ -96,5 +108,28 @@ public class BoardController {
 		newStr = newStr.replace("&lt;", "<");
 		newStr = newStr.replace("&gt;", ">");
 		return newStr;
+	}
+	
+	@GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public void download(@RequestParam("filename") String filename, HttpServletResponse response) {
+		File file = new File(filename);
+		int lastIndex = filename.lastIndexOf("\\");
+		String filename2 = filename.substring(lastIndex+1);
+		try {
+			filename2 = new String(filename2.getBytes("utf-8"),"ISO-8859-1");
+		}catch(UnsupportedEncodingException e) {
+			log.error(e.getMessage());
+		}
+		response.setHeader("Content-Disposition", "attachement; filename = "+ filename2);
+		//log.warn("경로 = "+file.getAbsolutePath());
+		//log.warn("파일 존재 여부 = " + file.exists());
+		//log.warn("파일명 = " + filename2);
+		try(InputStream is = new FileInputStream(file);) {
+			IOUtils.copy(is, response.getOutputStream());
+			response.flushBuffer();
+		}catch(Exception e) {
+			log.error(e.getMessage());
+		}
+		
 	}
 }

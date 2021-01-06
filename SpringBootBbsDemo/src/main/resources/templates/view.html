@@ -54,7 +54,8 @@
 							<td width="13%"></td>
 							<td width="51%" colspan="3">첨부파일 : 
 								<span th:if="${board.filename ne null}">
-									<span id='filename'  th:text="${board.filename}"></span>&nbsp;
+									<a th:href="@{/download?filename={filename}(filename=${board.filename})}"
+										th:text="${realFilename}"></a>&nbsp;
 										<img th:src="'/images/' + ${ext} + '.png'" style="width:25px;height:25px" />
 								</span>
 								<span th:if="${board.filename eq null}">&nbsp;</span>
