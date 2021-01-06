@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,15 @@ public class BoardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		this.boardService.readAll(map);
 		List<BoardVO> list = (List<BoardVO>)map.get("results");
-		log.warn("size = " + list.size());
+		//log.warn("size = " + list.size());
+		list.forEach(board -> {
+			String filename = board.getFilename();
+			if(filename != null) {
+				int lastindex = filename.lastIndexOf(".");
+				String ext = filename.substring(lastindex + 1);
+				board.setFilename(ext);
+			}
+		});
 		model.addAttribute("boardlist", list);
 		return "list";     //  /templates/list.html
 	}
@@ -49,5 +58,16 @@ public class BoardController {
 		//log.warn("email = " + boardVo.getEmail());
 		this.boardService.create(boardVo, file);
 		return "redirect:/list";
+	}
+	
+	@GetMapping("/view/{idx}")
+	public String view(@PathVariable int idx, Model model) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("idx", idx);
+		this.boardService.read(map);
+		List<BoardVO> list = (List<BoardVO>)map.get("result");
+		BoardVO boardVo = list.get(0);
+		model.addAttribute("board", boardVo);
+		return "view";     //  /templates/view.html
 	}
 }

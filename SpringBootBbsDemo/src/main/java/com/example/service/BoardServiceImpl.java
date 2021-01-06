@@ -20,18 +20,19 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public void create(BoardVO boardVo, MultipartFile file) throws Exception{
-		String filename = file.getOriginalFilename();
-		String saveFolder = System.getProperty("user.dir") + "\\files";
-		File fileFile = new File(saveFolder);
-		if(!fileFile.exists()) {  //즉, 폴더가 있지 않다면
-			fileFile.mkdir();
+		if(!file.getOriginalFilename().equals("")) {
+			String filename = file.getOriginalFilename();
+			String saveFolder = System.getProperty("user.dir") + "\\files";
+			File fileFile = new File(saveFolder);
+			if(!fileFile.exists()) {  //즉, 폴더가 있지 않다면
+				fileFile.mkdir();
+			}
+			String filePath = saveFolder + "\\" + filename;  
+			//C:/SpringBootHome/SpringBootBbsDemo/files/aaa.jpg
+			file.transferTo(new File(filePath));   //실제로 하드디스크에 저장
+			//log.warn("저장경로 = " + filePath);
+			boardVo.setFilename(filePath);
 		}
-		String filePath = saveFolder + "\\" + filename;  
-		//C:/SpringBootHome/SpringBootBbsDemo/files/aaa.jpg
-		file.transferTo(new File(filePath));   //실제로 하드디스크에 저장
-		//log.warn("저장경로 = " + filePath);
-		boardVo.setFilename(filePath);
-		
 		String name = boardVo.getName();
 		name = change(name);
 		boardVo.setName(name);

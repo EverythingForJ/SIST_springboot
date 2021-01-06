@@ -37,10 +37,18 @@
 			<tbody th:if="${boardlist.size() gt 0}">	
   				<tr th:each="board : ${boardlist}">
 					<td class="text-center" th:text="${board.idx}"></td>
-					<td class="text-center" th:text="${board.name}"></td>
-					<td class="text-center" th:text="${board.title}"></td>
-					<td class="text-center" th:text="${board.filename}"></td>
-					<td class="text-center">${board.writedate}</td>
+					<td class="text-center" th:if="${board.email ne null}">
+						<a th:href="'mailto:' + ${board.email}" th:text="${board.name}"></a>
+					</td>
+					<td class="text-center" th:if="${board.email eq null}" th:text="${board.name}"></td>
+					<td class="text-center">
+						<a th:href="@{view/{idx}(idx=${board.idx})}" th:text="${board.title}"></a>
+					</td>
+					<td class="text-center" th:if="${board.filename ne null}">
+						<img th:src="'images/' + ${board.filename} + '.png'" style="width:25px;height:25px"/>
+					</td>
+					<td  class="text-center" th:if="${board.filename eq null}">&nbsp;</td>
+					<td class="text-center" th:text="${#dates.format(board.writedate, 'yyyy-MM-dd')}"></td>
 					<td class="text-center" th:text="${board.readcount}"></td>
 				</tr>
   			</tbody>
