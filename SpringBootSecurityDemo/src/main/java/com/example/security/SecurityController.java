@@ -43,4 +43,8 @@ public class SecurityController {
 		log.info("called loginSuccess page");
 	}
 
+	@GetMapping("/logout")
+	public void logout() { // /templates/logout.html
+		log.info("called Logout page");
+	}
 }
