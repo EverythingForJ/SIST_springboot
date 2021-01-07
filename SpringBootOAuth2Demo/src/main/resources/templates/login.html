@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=" http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+<script>
+	$(function() {
+		$('a').on(
+				"click",
+				function() {
+					location.href = "/oauth2/authorization/"
+							+ $(this).attr("data-social");
+				});
+	});
+</script>
+</head>
+<body>
+	<h1>Login Page</h1>
+	<a href="#" class="btn_social" data-social="facebook">Facebook</a><br />
+	<a href="#" class="btn_social" data-social="google">Google</a><br />
+	<a href="#" class="btn_social" data-social="kakao">Kakao</a><br />
+	<a href="#" class="btn_social" data-social="naver">Naver</a><br />
+</body>
+</html>
