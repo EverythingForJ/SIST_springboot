@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>회원가입</title>
+	<link rel="stylesheet" href="/webjars/bootstrap/3.4.1/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/webjars/bootstrap/3.4.1/css/bootstrap-theme.min.css" />
+	<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+	<script>
+		$(function () {
+			var flag = 0;
+			$("#userid").bind("change", function () {
+				if ($("#userid").val()) {
+					$("#useriddiv").attr("class", "form-group has-success has-feedback");
+					$("#useridicon").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+					$("#useridsr").text("(success)");
+					flag++;
+				}
+			});
+			$("#passwd").bind("change", function () {
+				if ($("#passwd").val()) {
+					$("#passwddiv").attr("class", "form-group has-success has-feedback");
+					$("#passwdicon").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+					$("#passwdsr").text("(success)");
+					flag++;
+				}
+			});
+			$("#name").bind("change", function () {
+				if ($("#name").val()) {
+					$("#namediv").attr("class", "form-group has-success has-feedback");
+					$("#nameicon").attr("class", "glyphicon glyphicon-ok form-control-feedback");
+					$("#namesr").text("(success)");
+					flag++;
+					if (flag == 3) {
+						$('button').removeAttr("disabled");
+					}
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<h1 class="h1 text-center">회원가입</h1>
+		</div>
+		<div class="row">
+			<form class="form-horizontal" action="/register" method="post">
+				<div id="useriddiv" class="form-group has-error has-feedback">
+					<label for="userid" class="col-sm-3 control-label">User ID</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-trash"></span></span> 
+							<input type="text" name="userid" id="userid" class="form-control" placeholder="Enter your ID" required>
+						</div>
+						<span id="useridicon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span> <span id="useridsr" class="sr-only">(error)</span>
+					</div>
+				</div>
+				<div id="passwddiv" class="form-group has-error has-feedback">
+					<label for="passwd" class="col-sm-3 control-label">Password</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span> 
+							<input type="password" name="passwd" id="passwd" class="form-control" 
+								placeholder="Enter your password" required>
+						</div>
+						<span id="passwdicon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span> <span id="passwdsr" class="sr-only">(error)</span>
+					</div>
+				</div>
+				<div id="namediv" class="form-group has-error has-feedback">
+					<label for="name" class="col-sm-3 control-label">Name</label>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span> 
+							<input type="text" name="name" id="name" class="form-control" placeholder="Enter your name"
+								required>
+						</div>
+						<span id="nameicon" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span> <span id="namesr" class="sr-only">(error)</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-6 col-sm-offset-3">
+						<button class="col-sm-4 btn btn-primary" disabled>Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
